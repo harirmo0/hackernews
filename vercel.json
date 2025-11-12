@@ -15,9 +15,5 @@
     "app/api/cron/route.ts": {
       "maxDuration": 60
     }
-  },
-  "env": {
-    "OPENROUTER_API_KEY": "@openrouter_api_key",
-    "CRON_SECRET": "@cron_secret"
   }
 }
