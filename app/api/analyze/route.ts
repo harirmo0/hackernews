@@ -120,7 +120,15 @@ Format your response as JSON with keys: summary, sentiment, keyPoints (array), t
     const response = completion.choices[0]?.message?.content
     if (!response) throw new Error('No response from OpenRouter')
 
-    const analysis: AnalysisResult = JSON.parse(response)
+    // Clean the response to extract JSON from markdown if needed
+    let jsonString = response.trim()
+    if (jsonString.startsWith('```json')) {
+      jsonString = jsonString.replace(/```json\s*/, '').replace(/```\s*$/, '')
+    } else if (jsonString.startsWith('```')) {
+      jsonString = jsonString.replace(/```\s*/, '').replace(/```\s*$/, '')
+    }
+
+    const analysis: AnalysisResult = JSON.parse(jsonString)
     
     // Validate and sanitize the response
     const sanitizedAnalysis: AnalysisResult = {
@@ -227,9 +235,17 @@ Format your response as JSON with keys: summary, sentiment, keyPoints (array), t
     })
 
     const response = completion.choices[0]?.message?.content
-    if (!response) throw new Error('No response from OpenAI')
+    if (!response) throw new Error('No response from OpenRouter')
 
-    const analysis: AnalysisResult = JSON.parse(response)
+    // Clean the response to extract JSON from markdown if needed
+    let jsonString = response.trim()
+    if (jsonString.startsWith('```json')) {
+      jsonString = jsonString.replace(/```json\s*/, '').replace(/```\s*$/, '')
+    } else if (jsonString.startsWith('```')) {
+      jsonString = jsonString.replace(/```\s*/, '').replace(/```\s*$/, '')
+    }
+
+    const analysis: AnalysisResult = JSON.parse(jsonString)
     
     // Validate and sanitize the response
     const sanitizedAnalysis: AnalysisResult = {
